@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 app.use(cors({
     credentials : true,
-    origin : ["http://localhost:5173", "https://twitter-frontend-9htw.onrender.com"]
+    origin : ["http://localhost:5173", "https://twitter-frontend-ru7a.onrender.com"]
 }))
 app.use(express.json())
 app.use(cp())
