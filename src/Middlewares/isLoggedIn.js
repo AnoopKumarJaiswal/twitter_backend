@@ -5,6 +5,10 @@ const { populate } = require("dotenv")
 const isLoggedIn = async(req, res, next) => {
     try {
         const{ loginToken } = req.cookies
+        if(!loginToken)
+        {
+            throw new Error("Please Login first!")
+        }
         const originalObject = jwt.verify(loginToken, process.env.JWT_SECRET)        
         const foundUser = await User.findOne({_id : originalObject.id}).populate({
             path : "post",

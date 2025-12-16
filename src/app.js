@@ -13,6 +13,7 @@ const cors = require("cors")
 const fn = require("socket.io")
 const http = require("http")
 const { chatRouter } = require("./Routes/Chat")
+const {Chat} = require("./Models/Chat")
 
 
 const Server = http.createServer(app)
@@ -28,8 +29,9 @@ io.on("connection", (socket) =>{
       const roomId = [senderId , recieverId].sort().join("")
       socket.join(roomId)
       
-      socket.on("send-msg", ({text, fromUserId , toUserId}) =>{
-        io.to(roomId).emit("recieve-msg" , {text, fromUserId, toUserId})
+      socket.on("send-msg", async({text, fromUserId , toUserId}) =>{
+        const createdUser = await Chat.create({text , fromUserId , toUserId})
+        io.to(roomId).emit("recieve-msg" , {text, fromUserId, toUserId , createdAt : createdUser.createdAt})
       })
     })
     
