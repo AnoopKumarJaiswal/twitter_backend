@@ -10,13 +10,38 @@ const cp = require("cookie-parser")
 const { commentRouter } = require("./Routes/Comment")
 const { replyRouter } = require("./Routes/ReplyRouter")
 const cors = require("cors")
+const fn = require("socket.io")
+const http = require("http")
+const { chatRouter } = require("./Routes/Chat")
+
+
+const Server = http.createServer(app)
+const io = fn(Server , {
+    cors : {
+        origin : "*"
+    }
+})
+
+
+io.on("connection", (socket) =>{
+    socket.on("join-room" , ({senderId, recieverId}) =>{
+      const roomId = [senderId , recieverId].sort().join("")
+      socket.join(roomId)
+      
+      socket.on("send-msg", ({text, fromUserId , toUserId}) =>{
+        io.to(roomId).emit("recieve-msg" , {text, fromUserId, toUserId})
+      })
+    })
+    
+    
+})
 
 
 mongoose.connect(process.env.MONGODB_URL)
 .then(() => {
     console.log("DB Connected")
 
-    app.listen(process.env.PORT, () => {
+    Server.listen(process.env.PORT, () => {
         console.log("Server running on port " + process.env.PORT)
     })
 })
@@ -37,5 +62,6 @@ app.use("/api", profileRouter)
 app.use("/api", postRouter)
 app.use("/api", commentRouter)
 app.use("/api", replyRouter)
+app.use("/api", chatRouter)
 
 

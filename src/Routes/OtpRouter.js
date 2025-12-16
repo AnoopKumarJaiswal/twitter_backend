@@ -9,7 +9,7 @@ const { OTP } = require("../Models/OTP");
 const transporter = nodemailer.createTransport({
     service : "gmail",
     auth : {
-        user : "shubhamkashyap107@gmail.com",
+        user : "anoopjaiswal1220@gmail.com",
         pass : process.env.APP_PASSWORD
     }
 })
@@ -30,7 +30,7 @@ router.post("/otp/send-otp", otpLimiter , async(req, res) => {
         await OTP.create({mail, otp})
 
         await transporter.sendMail({
-            from : ' "Shubham" shubhamkashyap107@gmail.com',
+            from : ' "Anoop" anoopjaiswal1220@gmail.com',
             to : mail,
             subject : "OTP",
             html : `

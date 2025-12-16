@@ -103,6 +103,9 @@ router.get("/profile/feed", isLoggedIn, async(req, res) => {
         res.status(400).json({error : error.message})
     }
 })
+
+
+
 router.get("/profile/:id", isLoggedIn, async(req, res) => {
     try {
         const{id} = req.params
