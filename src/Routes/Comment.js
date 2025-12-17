@@ -23,7 +23,7 @@ router.post("/comments/:id", isLoggedIn, async(req, res) => {
         foundPost.comment.push(newComment)
         await foundPost.save()
 
-        res.status(201).json({msg : "done"})
+        res.status(201).json({msg : "done" , data : foundPost})
       
     } catch (error) {
         res.status(400).json({error : error.message})
