@@ -18,11 +18,12 @@ router.post("/comments/:id", isLoggedIn, async(req, res) => {
             throw new Error("Post Not Found / Post Does Not Exist")
         }
         const newComment = await Comment.create({text, author : req.user._id})
+
+        await newComment.populate("author", "username profilePicture");
         
      
         foundPost.comment.push(newComment)
         await foundPost.save()
-
         res.status(201).json({msg : "done" , data : foundPost})
       
     } catch (error) {

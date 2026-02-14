@@ -65,7 +65,7 @@ router.post("/signin", async(req, res) => {
 
         const token = jwt.sign({id : foundUser._id}, process.env.JWT_SECRET)
         const{firstName, lastName, username : un, profilePicture, bio, followers, following, post, dateOfBirth} = foundUser
-        res.cookie("loginToken", token, {maxAge : 24 * 60 * 60 * 1000}).status(200).json({msg : "done", data : {firstName, lastName, username : un, profilePicture, bio, followers, following, post, dateOfBirth}})
+        res.cookie("loginToken", token, {httpOnly: true, secure: true,sameSite: "None",maxAge : 24 * 60 * 60 * 1000}).status(200).json({msg : "done", data : {firstName, lastName, username : un, profilePicture, bio, followers, following, post, dateOfBirth}})
 
     } catch (error) {
         res.status(400).json({error : error.message})

@@ -36,7 +36,7 @@ router.get("/posts", isLoggedIn, async(req, res) => {
                 path : "comment",
                 populate : {
                     path : "author",
-                    select : "firstName lastName username profilePicture"
+                    select : "firstName lastName username profilePicture text"
                 }
             },
             {
