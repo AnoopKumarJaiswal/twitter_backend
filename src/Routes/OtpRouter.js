@@ -33,28 +33,78 @@ router.post("/otp/send-otp", otpLimiter , async(req, res) => {
             from : ' "Anoop" anoopjaiswal1220@gmail.com',
             to : mail,
             subject : "OTP",
-            html : `
-            <div style="font-family: Arial, sans-serif; padding: 40px 0; text-align: center;">
-                <div style="font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #0f1419;">
-                    Your Verification Code
-                </div>
+           html: `
+                <div style="font-family: Arial, sans-serif; background:#f0f8ff; padding:60px 0;">
 
-                <div style="font-size: 40px; letter-spacing: 8px; font-weight: bold; color: #1d9bf0; margin: 30px 0;">
+                <div style="
+                    max-width:500px;
+                    margin:auto;
+                    background:white;
+                    border-radius:20px;
+                    padding:50px;
+                    text-align:center;
+                    box-shadow:0 20px 60px rgba(0,0,0,0.1);
+                ">
+
+                    <div style="
+                    font-size:28px;
+                    font-weight:bold;
+                    color:#1d9bf0;
+                    margin-bottom:20px;
+                    ">
+                    🚀 Secure Social Verification
+                    </div>
+
+                    <div style="
+                    font-size:18px;
+                    color:#444;
+                    margin-bottom:30px;
+                    ">
+                    Your One-Time Password
+                    </div>
+
+                    <!-- SUPER GLOW OTP -->
+                    <div style="
+                    font-size:48px;
+                    letter-spacing:14px;
+                    font-weight:bold;
+                    padding:25px 30px;
+                    border-radius:16px;
+                    color:white;
+                    display:inline-block;
+                    background:linear-gradient(135deg,#1d9bf0,#6dd5fa,#1d9bf0);
+                    box-shadow:
+                        0 0 15px #1d9bf0,
+                        0 0 30px #1d9bf0,
+                        0 0 60px #1d9bf0,
+                        inset 0 0 10px rgba(255,255,255,0.6);
+                    ">
                     ${otp}
-                </div>
+                    </div>
+            
+                    <div style="
+                    font-size:15px;
+                    color:#555;
+                    margin-top:35px;
+                    line-height:24px;
+                    ">
+                    Enter this code in the app to verify your email.
+                    <br/><br/>
+                    ⏳ Expires in <b>5 minutes</b>.
+                    </div>
 
-                <div style="font-size: 14px; color: #536471; max-width: 420px; margin: 0 auto; line-height: 22px;">
-                    Enter this code in the app to verify your email address.
-                    <br /><br />
-                    This code will expire in 2 minutes.
-                </div>
+                    <div style="
+                    margin-top:40px;
+                    font-size:12px;
+                    color:#999;
+                    ">
+                    If you didn’t request this, ignore safely.
+                    </div>
 
-                <div style="margin-top: 40px; font-size: 12px; color: #a4a4a4;">
-                    If you didn’t request this, you can safely ignore this email.
                 </div>
-            </div>
+                </div>
+                `
 
-            `
         })
 
         res.status(201).json({msg : "done"})

@@ -82,6 +82,35 @@ router.get("/get-user-data", isLoggedIn, async(req, res) => {
     res.status(200).json({data : {_id, firstName, lastName, username : un, profilePicture, bio, followers, following, post, dateOfBirth}})
 })
 
+router.patch("/changepassword", isLoggedIn, async(req, res) =>{
+    try {
+          const {oldPassword, newPassword} = req.body
+          if(!oldPassword || !newPassword)
+          {
+            throw new Error("Please provide old and new Password both")
+          }
+
+          const isValidOldPassword = await bcrypt.compare(oldPassword , req.user.password)
+          if(!isValidOldPassword)
+          {
+            throw new Error("Please Provide valid oldPassword")
+          }
+
+          const isStrongPassword = validator.isStrongPassword(newPassword)
+          if(!isStrongPassword)
+          {
+            throw new Error("Password Should be strong.")
+          }
+
+          const hashedPassword = await bcrypt.hash(newPassword , 10)
+          const updatePassword =   await User.findByIdAndUpdate(req.user._id , {password : hashedPassword})
+
+          res.status(200).json({Success : true , msg : "Password Changed Successfully" })
+    } catch (error) {
+        res.status(400).json({error : error.message})
+    }
+})
+
 
 
 module.exports = {
